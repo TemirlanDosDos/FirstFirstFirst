@@ -15,16 +15,32 @@ public class Vaccination {
         return vaccineName;
     }
 
+    public void setVaccineName(String vaccineName) {
+        this.vaccineName = vaccineName;
+    }
+
     public String getDisease() {
         return disease;
+    }
+
+    public void setDisease(String disease) {
+        this.disease = disease;
     }
 
     public int getVaccinationYear() {
         return vaccinationYear;
     }
 
+    public void setVaccinationYear(int vaccinationYear) {
+        this.vaccinationYear = vaccinationYear;
+    }
+
     public int getValidUntilYear() {
         return validUntilYear;
+    }
+
+    public void setValidUntilYear(int validUntilYear) {
+        this.validUntilYear = validUntilYear;
     }
 
     @Override

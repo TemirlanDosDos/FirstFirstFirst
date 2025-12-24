@@ -13,12 +13,24 @@ public class Treatment {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public double getPrice() {
         return price;
     }
 
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     public int getExpiryDate() {
         return expiryDate;
+    }
+
+    public void setExpiryDate(int expiryDate) {
+        this.expiryDate = expiryDate;
     }
 
     @Override
