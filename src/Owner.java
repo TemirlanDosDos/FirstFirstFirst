@@ -5,51 +5,26 @@ public class Owner {
     private String address;
 
     public Owner(long id, String name, String phoneNumber, String address) {
-        this.id = id;
-        this.name = name;
+        setId(id);
+        setName(name);
         this.phoneNumber = phoneNumber;
         this.address = address;
-    }
-
-    public long getId() {
-        return id;
     }
 
     public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
+        this.id = id > 0 ? id : 0;
     }
 
     public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+        if (name != null && !name.isBlank()) {
+            this.name = name;
+        } else {
+            this.name = "Unknown";
+        }
     }
 
     @Override
     public String toString() {
-        return "Owner{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", address='" + address + '\'' +
-                '}';
+        return "Owner{id=" + id + ", name='" + name + "'}";
     }
 }
