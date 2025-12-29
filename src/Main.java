@@ -17,7 +17,7 @@ public class Main {
         while (running) {
             displayMenu();
             int choice = scanner.nextInt();
-            scanner.nextLine(); // VERY IMPORTANT
+            scanner.nextLine();
 
             switch (choice) {
                 case 1 -> addOwner();
@@ -62,7 +62,6 @@ public class Main {
                 """);
     }
 
-    // ---------------- ADD / VIEW METHODS ----------------
 
     private static void addOwner() {
         System.out.print("Enter ID: ");
