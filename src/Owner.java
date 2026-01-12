@@ -1,13 +1,10 @@
-public class Owner {
+public class Owner extends Person {
     private long id;
-    private String name;
-    private String phoneNumber;
     private String address;
 
     public Owner(long id, String name, String phoneNumber, String address) {
+        super(name, phoneNumber);
         setId(id);
-        setName(name);
-        this.phoneNumber = phoneNumber;
         this.address = address;
     }
 
@@ -15,16 +12,20 @@ public class Owner {
         this.id = id > 0 ? id : 0;
     }
 
-    public void setName(String name) {
-        if (name != null && !name.isBlank()) {
-            this.name = name;
-        } else {
-            this.name = "Unknown";
-        }
+    @Override
+    public String getRole() {
+        return "Owner";
     }
 
     @Override
     public String toString() {
         return "Owner{id=" + id + ", name='" + name + "'}";
     }
+
+    @Override
+    public String work() {
+        return "Owner takes care of pets";
+    }
+
 }
+
