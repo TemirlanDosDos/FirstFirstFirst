@@ -1,6 +1,9 @@
+package model;
+
 import java.util.ArrayList;
 
 public class VetOrder {
+
     private Person person;
     private Pet pet;
     private ArrayList<Treatment> treatments = new ArrayList<>();
@@ -22,16 +25,11 @@ public class VetOrder {
         return total;
     }
 
-    public void showPersonType() {
-        if (person instanceof Owner) {
-            System.out.println("Order owner is Owner");
-        } else if (person instanceof Veterinarian) {
-            System.out.println("Order handled by Veterinarian");
-        }
-    }
-
     @Override
     public String toString() {
-        return person + "\n" + pet + "\nTreatments=" + treatments + "\nTotal=" + getTotalPrice();
+        return person + "\n" +
+                pet + "\n" +
+                "Treatments=" + treatments + "\n" +
+                "Total=" + getTotalPrice();
     }
 }

@@ -1,7 +1,10 @@
+package model;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Appointment {
+
     private Owner owner;
     private Pet pet;
     private Veterinarian veterinarian;
@@ -15,54 +18,6 @@ public class Appointment {
         this.pet = pet;
         this.veterinarian = veterinarian;
         this.vaccination = vaccination;
-        this.confirmed = confirmed;
-    }
-
-    public Owner getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Owner owner) {
-        this.owner = owner;
-    }
-
-    public Pet getPet() {
-        return pet;
-    }
-
-    public void setPet(Pet pet) {
-        this.pet = pet;
-    }
-
-    public Veterinarian getVeterinarian() {
-        return veterinarian;
-    }
-
-    public void setVeterinarian(Veterinarian veterinarian) {
-        this.veterinarian = veterinarian;
-    }
-
-    public Vaccination getVaccination() {
-        return vaccination;
-    }
-
-    public void setVaccination(Vaccination vaccination) {
-        this.vaccination = vaccination;
-    }
-
-    public List<Treatment> getTreatments() {
-        return treatments;
-    }
-
-    public void setTreatments(List<Treatment> treatments) {
-        this.treatments = treatments;
-    }
-
-    public boolean isConfirmed() {
-        return confirmed;
-    }
-
-    public void setConfirmed(boolean confirmed) {
         this.confirmed = confirmed;
     }
 
