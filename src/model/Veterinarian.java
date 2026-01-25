@@ -6,7 +6,7 @@ public class Veterinarian extends Person {
 
     public Veterinarian(String name, String phoneNumber, int experienceYears) {
         super(name, phoneNumber);
-        setExperienceYears(experienceYears);
+        this.experienceYears = experienceYears;
     }
 
     public void setExperienceYears(int experienceYears) {
@@ -15,6 +15,10 @@ public class Veterinarian extends Person {
         }
         this.experienceYears = experienceYears;
     }
+
+    public int getExperienceYears() { return experienceYears; }
+    public String getName() { return name; }
+    public String getPhoneNumber() { return phoneNumber; }
 
     @Override
     public String getRole() {

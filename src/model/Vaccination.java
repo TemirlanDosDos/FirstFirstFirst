@@ -14,6 +14,22 @@ public class Vaccination {
         this.validUntilYear = validUntilYear;
     }
 
+    public String getVaccineName() {
+        return vaccineName;
+    }
+
+    public String getDisease() {
+        return disease;
+    }
+
+    public int getVaccinationYear() {
+        return vaccinationYear;
+    }
+
+    public int getValidUntilYear() {
+        return validUntilYear;
+    }
+
     @Override
     public String toString() {
         return "Vaccination{" +

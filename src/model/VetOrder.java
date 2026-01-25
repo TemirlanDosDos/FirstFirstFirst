@@ -25,6 +25,11 @@ public class VetOrder {
         return total;
     }
 
+    public Pet getPet() { return pet; }
+    public ArrayList<Treatment> getTreatments() {
+        return treatments;
+    }
+
     @Override
     public String toString() {
         return person + "\n" +

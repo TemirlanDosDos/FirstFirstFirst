@@ -7,10 +7,19 @@ public class Owner extends Person {
     private long id;
     private String address;
 
-    public Owner(long id, String name, String phoneNumber, String address)
+    public Owner(String id, String name, String phoneNumber, String address)
             throws InvalidInputException {
         super(name, phoneNumber);
-        setId(id);
+        this.id = Long.parseLong(id);
+        this.address = address;
+
+        try {
+            long parsedId = Long.parseLong(id);
+            setId(parsedId);
+        } catch (NumberFormatException e) {
+            throw new InvalidInputException("ID must be a number");
+        }
+
         setAddress(address);
     }
 
@@ -28,6 +37,20 @@ public class Owner extends Person {
         this.address = address;
     }
 
+    public long getId() {
+        return id;
+    }
+    public String getAddress() {
+        return address;
+    }
+    public String getName() {
+        return name;
+    }
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+
     @Override
     public String getRole() {
         return "Owner";
@@ -40,6 +63,6 @@ public class Owner extends Person {
 
     @Override
     public String toString() {
-        return "Owner{id=" + id + ", name='" + name + "'}";
+        return "Owner{id=" + id + ", name='" + name + "', phone='" + phoneNumber + "', address='" + address + "'}";
     }
 }

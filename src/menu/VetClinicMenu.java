@@ -4,6 +4,8 @@ import model.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import database.VetAllDataDAO;
+
 
 public class VetClinicMenu implements Menu {
 
@@ -26,7 +28,6 @@ public class VetClinicMenu implements Menu {
     @Override
     public void run() {
         boolean running = true;
-
         while (running) {
             displayMenu();
             try {
@@ -34,43 +35,48 @@ public class VetClinicMenu implements Menu {
                 scanner.nextLine();
 
                 switch (choice) {
+
                     case 1 -> addOwner();
+
                     case 2 -> addVeterinarian();
                     case 3 -> viewPeople();
                     case 4 -> createOrder();
-                    case 5 -> viewOrders();
-                    case 0 -> running = false;
-                    default -> System.out.println("Wrong choice");
+                    case 5 -> running = false;
+                    default -> System.out.println("Invalid choice");
                 }
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
                 scanner.nextLine();
             }
         }
     }
-
     private void addOwner() {
         try {
-            System.out.print("ID: ");
-            long id = scanner.nextLong();
-            scanner.nextLine();
+            System.out.print("Enter Owner ID: ");
+            String id = scanner.nextLine();
 
-            System.out.print("Name: ");
+            System.out.print("Enter Owner Name: ");
             String name = scanner.nextLine();
 
-            System.out.print("Phone: ");
+            System.out.print("Enter Owner Phone: ");
             String phone = scanner.nextLine();
 
-            System.out.print("Address: ");
+            System.out.print("Enter Owner Address: ");
             String address = scanner.nextLine();
 
-            people.add(new Owner(id, name, phone, address));
-            System.out.println("Owner added");
+            Owner owner = new Owner(id, name, phone, address);
+            people.add(owner);
+
+
+            System.out.println("Owner added & saved to DB ✅");
+
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
-            scanner.nextLine();
         }
     }
+
+
 
     private void addVeterinarian() {
         try {
@@ -116,6 +122,11 @@ public class VetClinicMenu implements Menu {
             int index = scanner.nextInt();
             scanner.nextLine();
 
+            if (!(people.get(index) instanceof Owner owner)) {
+                System.out.println("Only Owner can create order");
+                return;
+            }
+
             System.out.print("Pet name: ");
             String petName = scanner.nextLine();
 
@@ -123,10 +134,10 @@ public class VetClinicMenu implements Menu {
             int petAge = scanner.nextInt();
             scanner.nextLine();
 
-            VetOrder order = new VetOrder(
-                    people.get(index),
-                    new Pet(petName, petAge)
-            );
+            Pet pet = new Pet(petName, petAge);
+            VetOrder order = new VetOrder(owner, pet);
+
+            Treatment treatment = null;
 
             while (true) {
                 System.out.print("Treatment name (or stop): ");
@@ -137,17 +148,37 @@ public class VetClinicMenu implements Menu {
                 double price = scanner.nextDouble();
                 scanner.nextLine();
 
-                order.addTreatment(new Treatment(name, price));
+                treatment = new Treatment(name, price);
+                order.addTreatment(treatment);
             }
 
+
+            Veterinarian vet = new Veterinarian("Default Vet", "000000", 5);
+            Vaccination vaccination = new Vaccination(
+                    "Rabies",
+                    "Rabies",
+                    2024,
+                    2026
+            );
+
+            new VetAllDataDAO().insertAllData(
+                    owner,
+                    vet,
+                    pet,
+                    treatment,
+                    vaccination,
+                    order
+            );
+
             orders.add(order);
-            System.out.println("Order created");
+            System.out.println("Order created & saved to DB ✅");
 
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
             scanner.nextLine();
         }
     }
+
 
     private void viewOrders() {
         for (VetOrder order : orders) {

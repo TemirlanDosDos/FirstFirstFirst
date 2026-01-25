@@ -20,6 +20,10 @@ public class Treatment {
         return price;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public String toString() {
         return name + " ($" + price + ")";

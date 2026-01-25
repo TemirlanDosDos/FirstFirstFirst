@@ -16,6 +16,9 @@ public class Pet {
         this.age = age;
     }
 
+    public String getNickname() { return nickname; }
+    public int getAge() { return age; }
+
     @Override
     public String toString() {
         return "Pet{nickname='" + nickname + "', age=" + age + "}";
