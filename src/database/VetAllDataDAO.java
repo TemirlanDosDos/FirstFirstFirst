@@ -29,9 +29,10 @@ public class VetAllDataDAO {
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """;
 
-        Connection c = DatabaseConnection.getConnection();
+        Connection connection = DatabaseConnection.getConnection();
+        if (connection == null) return;
 
-        try (PreparedStatement ps = c.prepareStatement(sql)) {
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setLong(1, owner.getId());
             ps.setString(2, owner.getName());
@@ -60,7 +61,7 @@ public class VetAllDataDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            DatabaseConnection.close(c);
+            DatabaseConnection.close(connection);
         }
     }
 
@@ -72,10 +73,10 @@ public class VetAllDataDAO {
                 WHERE owner_id = ?
                 """;
 
-        Connection c = DatabaseConnection.getConnection();
-        if (c == null) return false;
+        Connection connection = DatabaseConnection.getConnection();
+        if (connection == null) return false;
 
-        try (PreparedStatement ps = c.prepareStatement(sql)) {
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, name);
             ps.setString(2, phone);
@@ -88,7 +89,7 @@ public class VetAllDataDAO {
             e.printStackTrace();
             return false;
         } finally {
-            DatabaseConnection.close(c);
+            DatabaseConnection.close(connection);
         }
     }
 
@@ -96,10 +97,10 @@ public class VetAllDataDAO {
 
         String sql = "DELETE FROM vet_all_data WHERE owner_id = ?";
 
-        Connection c = DatabaseConnection.getConnection();
-        if (c == null) return false;
+        Connection connection = DatabaseConnection.getConnection();
+        if (connection == null) return false;
 
-        try (PreparedStatement ps = c.prepareStatement(sql)) {
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setLong(1, ownerId);
             return ps.executeUpdate() > 0;
@@ -108,7 +109,7 @@ public class VetAllDataDAO {
             e.printStackTrace();
             return false;
         } finally {
-            DatabaseConnection.close(c);
+            DatabaseConnection.close(connection);
         }
     }
 
@@ -121,27 +122,27 @@ public class VetAllDataDAO {
                 ORDER BY owner_name
                 """;
 
-        Connection c = DatabaseConnection.getConnection();
-        if (c == null) return;
+        Connection connection = DatabaseConnection.getConnection();
+        if (connection == null) return;
 
-        try (PreparedStatement ps = c.prepareStatement(sql)) {
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, "%" + name + "%");
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                System.out.println(
-                        "Owner: " + rs.getString("owner_name") +
-                                ", Phone: " + rs.getString("owner_phone") +
-                                ", Pet: " + rs.getString("pet_name") +
-                                ", Total: " + rs.getDouble("total_price")
+                printOwnerInfo(
+                        rs.getString("owner_name"),
+                        rs.getString("owner_phone"),
+                        rs.getString("pet_name"),
+                        rs.getDouble("total_price")
                 );
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            DatabaseConnection.close(c);
+            DatabaseConnection.close(connection);
         }
     }
 
@@ -154,16 +155,15 @@ public class VetAllDataDAO {
                 ORDER BY total_price DESC
                 """;
 
-        Connection c = DatabaseConnection.getConnection();
-        if (c == null) return;
+        Connection connection = DatabaseConnection.getConnection();
+        if (connection == null) return;
 
-        try (PreparedStatement ps = c.prepareStatement(sql)) {
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setDouble(1, min);
             ps.setDouble(2, max);
 
             ResultSet rs = ps.executeQuery();
-
             while (rs.next()) {
                 System.out.println(
                         "Owner: " + rs.getString("owner_name") +
@@ -174,7 +174,7 @@ public class VetAllDataDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            DatabaseConnection.close(c);
+            DatabaseConnection.close(connection);
         }
     }
 
@@ -187,10 +187,10 @@ public class VetAllDataDAO {
                 ORDER BY total_price DESC
                 """;
 
-        Connection c = DatabaseConnection.getConnection();
-        if (c == null) return;
+        Connection connection = DatabaseConnection.getConnection();
+        if (connection == null) return;
 
-        try (PreparedStatement ps = c.prepareStatement(sql)) {
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setDouble(1, minPrice);
             ResultSet rs = ps.executeQuery();
@@ -205,7 +205,17 @@ public class VetAllDataDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            DatabaseConnection.close(c);
+            DatabaseConnection.close(connection);
         }
+    }
+
+
+    private void printOwnerInfo(String owner, String phone, String pet, double total) {
+        System.out.println(
+                "Owner: " + owner +
+                        ", Phone: " + phone +
+                        ", Pet: " + pet +
+                        ", Total: " + total
+        );
     }
 }
